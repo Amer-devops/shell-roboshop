@@ -83,15 +83,5 @@ VALIDATE $? "Enable user"
 systemctl start user
 VALIDATE $? "start user"
 
-cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
-VALIDATE $? "Copy mongo repo"
-
-dnf install mongodb-mongosh -y &>>$LOG_FILE
-VALIDATE $? "Install mongodb client"
-
-mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOG_FILE
-VALIDATE $? "Load user products"
-
-
 systemctl restart user
 VALIDATE $? "Restarting user"
