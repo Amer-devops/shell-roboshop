@@ -68,7 +68,7 @@ VALIDATE $? "change app directory"
 npm install &>>$LOG_FILE
 VALIDATE $? "Installing dependencies"
 
-cp $SCRIPT_DIR/etc/systemd/system/catalogue.service
+cp $SCRIPT_DIR /etc/systemd/system/catalogue.service
 VALIDATE $? "Copy catalogue.services"
 
 systemctl daemon-reload
