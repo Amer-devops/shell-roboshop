@@ -42,13 +42,10 @@ else
     echo -e "User alredy exist...$Y SKIPPING $N"
 fi
 
-dir=/app
-if [ $dir -ne o ]; then
-    mkdir /app 
-    VALIDATE $? "Creating app directory"
-else
-    echo -e "App alredy exist...$Y SKIPPING $N"
-fi
+mkdir /app 
+VALIDATE $? "Creating app directory"
+
+
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloading catalogue"
