@@ -10,7 +10,7 @@ LOGS_FOLDER="/var/log/shell-script"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log" # /var/log/shell-script/16-logs.log
 MONGO_HOST=mongodb.daws86s.icu
-SCRIPT_DIR=catalogue.services
+SCRIPT_DIR=$PWD
 mkdir -p $LOGS_FOLDER
 echo "Script started executed at: $(date)" | tee -a $LOG_FILE
 
@@ -33,6 +33,9 @@ VALIDATE $? "Disable nodejs"
 
 dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "Enable nodejs 20"
+
+dnf install nodejs -y
+VALIDATE $? "Install nodejs 20"
 
 id=roboshop
 if [ $? -ne 0 ]; then
@@ -68,7 +71,7 @@ VALIDATE $? "change app directory"
 npm install &>>$LOG_FILE
 VALIDATE $? "Installing dependencies"
 
-cp catalogue.service /etc/systemd/system/catalogue.service
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
 VALIDATE $? "Copy catalogue.services"
 
 systemctl daemon-reload
@@ -79,7 +82,7 @@ VALIDATE $? "Enable catalogue"
 systemctl start catalogue
 VALIDATE $? "start catalogue"
 
-cp mongo.repo/etc/yum.repos.d/mongo.repo 
+cp $SCRIPT_DIR/mongo.repo/etc/yum.repos.d/mongo.repo 
 VALIDATE $? "copy mongo.repo"
 
 dnf install mongodb-mongosh -y &>>$LOG_FILE
@@ -90,5 +93,3 @@ VALIDATE $? "Load catalogue products"
 
 systemctl restart catalogue
 VALIDATE $? "Restarting catalogue"
-
-
