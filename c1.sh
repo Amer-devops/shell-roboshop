@@ -47,7 +47,7 @@ fi
 
 dir /app 
 if [ $dir -ne 0 ]; then
-    mkdir /app
+    mkdir -p /app
     VALIDATE $? "Creating app directory"
 else
      echo -e "directory already exist ... $Y SKIPPING $N"
