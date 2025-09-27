@@ -35,7 +35,6 @@ dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "Enable nodejs:20"
 
 id roboshop
-
 if [id -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
     VALIDATE $? "Adding system user"
@@ -44,7 +43,6 @@ else
 fi
 
 dir /app
-
 if [ dir -ne o ]; then
     mkdir /app 
     VALIDATE $? "Creating app directory"
@@ -58,8 +56,11 @@ VALIDATE $? "Downloading catalogue"
 cd /app 
 VALIDATE $? "change app directory"
 
+rm -rf /app/*
+VALIDATE "Removing existing code"
+
 unzip /tmp/catalogue.zip &>>$LOG_FILE
-VALIDATE $? "Unzipping catalogue"
+VALIDATE $? "Unzip catalogue"
 
 cd /app 
 VALIDATE $? "change app directory"
