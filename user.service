@@ -1,14 +1,14 @@
 [Unit]
-Description = Cart Service
+Description = User Service
 [Service]
 User=roboshop
+Environment=MONGO=true
 // highlight-start
-Environment=REDIS_HOST=redis.daws86s.icu
-Environment=CATALOGUE_HOST=catalogue.daws86s.icu
-Environment=CATALOGUE_PORT=8080
+Environment=REDIS_URL='redis://redis.daws86s.icu:6379'
+Environment=MONGO_URL="mongodb://mongodb.daws86s.icu:27017/users"
 // highlight-end
 ExecStart=/bin/node /app/server.js
-SyslogIdentifier=cart
+SyslogIdentifier=user
 
 [Install]
 WantedBy=multi-user.target
