@@ -34,7 +34,7 @@ VALIDATE $? "Disable nodejs"
 dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "Enable nodejs:20"
 
-useradd -p --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
 VALIDATE $? "Adding system user"
 mkdir /app 
 VALIDATE $? "Creating app directory"
