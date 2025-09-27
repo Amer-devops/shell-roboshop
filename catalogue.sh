@@ -34,12 +34,21 @@ VALIDATE $? "Disable nodejs"
 dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "Enable nodejs:20"
 
+id roboshop
+if [id -ne 0 ]; then
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+    VALIDATE $? "Adding system user"
+else
+    echo -e "User alredy exist...$Y SKIPPING $N"
+fi
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
-VALIDATE $? "Adding system user"
-
-mkdir /app 
-VALIDATE $? "Creating app directory"
+dir /app
+if [ dir -ne o ]; then
+    mkdir /app 
+    VALIDATE $? "Creating app directory"
+else
+    echo -e "App alredy exist...$Y SKIPPING $N"
+fi
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloading catalogue"
@@ -56,7 +65,7 @@ VALIDATE $? "Unzip catalogue"
 cd /app 
 VALIDATE $? "change app directory"
 
-npm install  &>>$LOG_FILE
+npm install &>>$LOG_FILE
 VALIDATE $? "Installing dependencies"
 
 cp $SCRIPT_DIR /etc/systemd/system/catalogue.service
