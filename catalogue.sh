@@ -56,7 +56,7 @@ VALIDATE $? "Unzip catalogue"
 cd /app 
 VALIDATE $? "change app directory"
 
-npm install &>>$LOG_FILE
+npm install  &>>$LOG_FILE
 VALIDATE $? "Installing dependencies"
 
 cp $SCRIPT_DIR /etc/systemd/system/catalogue.service
