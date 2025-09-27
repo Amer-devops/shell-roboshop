@@ -34,10 +34,10 @@ dnf install mongodb-org -y &>>$LOG_FILE
 VALIDATE $? "Installing MongoDB"
 
 systemctl enable mongodb  &>>$LOG_FILE
-VALIDATE $? "enable mongoDB"
+VALIDATE $? "Enable mongoDB"
 
 systemctl start mongod 
-VALIDATE $? "start mongoDB"
+VALIDATE $? "Start mongoDB"
 
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
 VALIDATE $? "Allowing remote connections to MongoDB"
