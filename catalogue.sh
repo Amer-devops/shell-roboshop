@@ -34,16 +34,16 @@ VALIDATE $? "Disable nodejs"
 dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "Enable nodejs:20"
 
-id roboshop
-if [id -ne 0 ]; then
+id=roboshop
+if [$id -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
     VALIDATE $? "Adding system user"
 else
     echo -e "User alredy exist...$Y SKIPPING $N"
 fi
 
-dir /app
-if [ dir -ne o ]; then
+dir=/app
+if [ $dir -ne o ]; then
     mkdir /app 
     VALIDATE $? "Creating app directory"
 else
