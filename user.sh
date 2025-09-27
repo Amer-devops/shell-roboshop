@@ -54,8 +54,8 @@ VALIDATE $? "Creating app directory"
 
 
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE
-VALIDATE $? "Downloading catalogue"
+curl -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip &>>$LOG_FILE
+VALIDATE $? "Downloading user"
 
 cd /app 
 VALIDATE $? "change app directory"
@@ -63,8 +63,8 @@ VALIDATE $? "change app directory"
 rm -rf /app/*
 VALIDATE "Removing existing code"
 
-unzip /tmp/catalogue.zip &>>$LOG_FILE
-VALIDATE $? "Unzip catalogue"
+unzip /tmp/user.zip &>>$LOG_FILE
+VALIDATE $? "Unzip user"
 
 cd /app 
 VALIDATE $? "change app directory"
@@ -72,16 +72,16 @@ VALIDATE $? "change app directory"
 npm install &>>$LOG_FILE
 VALIDATE $? "Installing dependencies"
 
-cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
-VALIDATE $? "Copy catalogue.services"
+cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service
+VALIDATE $? "Copy user.services"
 
 systemctl daemon-reload
 
-systemctl enable catalogue &>>$LOG_FILE
-VALIDATE $? "Enable catalogue"
+systemctl enable user &>>$LOG_FILE
+VALIDATE $? "Enable user"
 
-systemctl start catalogue
-VALIDATE $? "start catalogue"
+systemctl start user
+VALIDATE $? "start user"
 
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "Copy mongo repo"
@@ -90,8 +90,8 @@ dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "Install mongodb client"
 
 mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOG_FILE
-VALIDATE $? "Load catalogue products"
+VALIDATE $? "Load user products"
 
 
-systemctl restart catalogue
-VALIDATE $? "Restarting catalogue"
+systemctl restart user
+VALIDATE $? "Restarting user"
