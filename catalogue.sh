@@ -28,10 +28,10 @@ VALIDATE(){ # functions receive inputs through args just like shell script args
     fi
 }
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>>$LOG_FILE
 VALIDATE $? "Disable nodejs"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "Enable nodejs:20"
 
 useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
@@ -39,16 +39,17 @@ VALIDATE $? "Adding system user"
 mkdir /app 
 VALIDATE $? "Creating app directory"
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloading catalogue"
 cd /app 
 VALIDATE $? "change app directory"
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>>$LOG_FILE
 VALIDATE $? "Unzipping catalogue"
 
 cd /app 
 VALIDATE $? "change app directory"
-npm install 
+
+npm install &>>$LOG_FILE
 VALIDATE $? "Installing dependencies"
 
 cp $SCRIPT_DIR/etc/systemd/system/catalogue.service
@@ -56,19 +57,19 @@ VALIDATE $? "Copy catalogue.services"
 
 systemctl daemon-reload
 
-systemctl enable catalogue 
+systemctl enable catalogue &>>$LOG_FILE
 VALIDATE $? "Enable catalogue"
 
 systemctl start catalogue
 VALIDATE $? "start catalogue"
 
-cp mongo.repo/etc/yum.repos.d/mongo.repo
+cp mongo.repo/etc/yum.repos.d/mongo.repo 
 VALIDATE $? "copy mongo.repo"
 
-dnf install mongodb-mongosh -y
+dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "Install mongodb client"
 
-mongosh --host $MONGO_HOST </app/db/master-data.js
+mongosh --host $MONGO_HOST </app/db/master-data.js &>>$LOG_FILE
 VALIDATE $? "Load catalogue products"
 
 systemctl restart catalogue
