@@ -32,8 +32,13 @@ VALIDATE(){ # functions receive inputs through args just like shell script args
 dnf install maven -y
 VALIDATE $? "Installing Maven"
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
-VALIDATE $? "Adding system user"
+id=roboshop
+if [ $? -ne 0 ]; then
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+    VALIDATE $? "Adding system user"
+else
+    echo -e "User alredy exist...$Y SKIPPING $N"
+fi
 
 mkdir -p /app 
 VALIDATE $? "Create app directory"
