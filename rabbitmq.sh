@@ -33,16 +33,15 @@ cp $SCRIPT_DIR/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>>$LOG_FILE
 VALIDATE $? "Adding RabbitMQ repo"
 
 dnf install rabbitmq-server -y &>>$LOG_FILE
-VALIDATE $? "Installing rabbitmq"
+VALIDATE $? "Installing RabbitMQ Server"
 
 systemctl enable rabbitmq-server &>>$LOG_FILE
-VALIDATE $? "Enabiling rabbitmq"
+VALIDATE $? "Enabling RabbitMQ Server"
 
 systemctl start rabbitmq-server &>>$LOG_FILE
-VALIDATE $? "Start rabbitmq"
+VALIDATE $? "Starting RabbitMQ"
 
 rabbitmqctl add_user roboshop roboshop123 &>>$LOG_FILE
-VALIDATE $? "Adding user"
 
 rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>$LOG_FILE
-VALIDATE $? "Setting permissions"
+VALIDATE $? "Setting up permissions"
