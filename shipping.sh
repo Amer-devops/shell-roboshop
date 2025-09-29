@@ -54,7 +54,7 @@ VALIDATE $? "Downloading shiiping zip"
 cd /app 
 VALIDATE $? "Change to aap directory"
 
-unzip /tmp/sHhipping.zip &>>$LOG_FILE
+unzip /tmp/shipping.zip &>>$LOG_FILE
 VALIDATE $? "Unzipping to temp"
 
 
