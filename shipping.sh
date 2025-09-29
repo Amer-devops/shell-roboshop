@@ -57,10 +57,10 @@ VALIDATE $? "Installing dependencies"
 systemctl daemon-reload
 
 systemctl enable shipping 
-VALIDATE $? "Enabling shipping services"
+VALIDATE $? "Enabling shipping "
 
 systemctl start shipping
-VALIDATE $? "Starting shipping services"
+VALIDATE $? "Starting shipping"
 
 
 dnf install mysql -y 
