@@ -29,6 +29,9 @@ VALIDATE(){ # functions receive inputs through args just like shell script args
     fi
 }
 
+cp $SCRIPT_DIR/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>>$LOG_FILE
+VALIDATE $? "Adding RabbitMQ repo"
+
 dnf install rabbitmq-server -y
 VALIDATE $? "Installing rabbitmq"
 
