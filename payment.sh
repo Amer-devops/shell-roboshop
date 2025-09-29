@@ -42,7 +42,7 @@ mkdir -p /app
 VALIDATE $? "Creating app directory"
 
 curl -L -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip  &>>$LOG_FILE
-VALIDATE $? "Downloading PAyment zip"
+VALIDATE $? "Downloading payment zip"
 
 cd /app 
 VALIDATE $? "Changing to app directory"
