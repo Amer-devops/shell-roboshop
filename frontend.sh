@@ -31,11 +31,7 @@ VALIDATE(){ # functions receive inputs through args just like shell script args
 
 
 dnf module disable nginx -y
-VALIDATE $? "Disable nginx"
-
 dnf module enable nginx:1.24 -y
-VALIDATE $? "Enable nginx"
-
 dnf install nginx -y
 VALIDATE $? "Installing nginx"
 
@@ -58,6 +54,6 @@ VALIDATE $? "Unzip nginx"
 rm -rf /etc/nginx/nginx.conf
 
 cp frontend.service /nginx.conf /etc/nginx/nginx.conf
-
+VALIDATE $? "Copying nginx.conf"
 
 systemctl restart nginx 
