@@ -41,6 +41,10 @@ else
     echo -e "User alredy exist...$Y SKIPPING $N"
 fi
 
+
+rm -rf /app
+VALIDATE $? "Removing Directory"
+
 mkdir -p /app 
 VALIDATE $? "Create app directory"
 
