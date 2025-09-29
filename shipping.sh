@@ -60,6 +60,9 @@ VALIDATE $? "Installing package"
 mv target/shipping-1.0.jar shipping.jar 
 VALIDATE $? "Installing dependencies"
 
+cp $PWD/shipping.service /etc/systemd/system/shipping.service
+VALIDATE $? "Coping shipping service "
+
 systemctl daemon-reload
 
 systemctl enable shipping  &>>$LOG_FILE
