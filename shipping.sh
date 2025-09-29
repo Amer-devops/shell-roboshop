@@ -50,11 +50,11 @@ VALIDATE $? "Downloading shiiping zip"
 cd /app 
 VALIDATE $? "Change to aap directory"
 
-unzip /tmp/shipping.zip
+unzip /tmp/shipping.zip &>>$LOG_FILE
 VALIDATE $? "Unzipping to temp"
 
 
-mvn clean package 
+mvn clean package &>>$LOG_FILE
 VALIDATE $? "Installing package"
 
 mv target/shipping-1.0.jar shipping.jar 
@@ -62,25 +62,25 @@ VALIDATE $? "Installing dependencies"
 
 systemctl daemon-reload
 
-systemctl enable shipping 
+systemctl enable shipping  &>>$LOG_FILE
 VALIDATE $? "Enabling shipping "
 
-systemctl start shipping
+systemctl start shipping &>>$LOG_FILE
 VALIDATE $? "Starting shipping"
 
 
-dnf install mysql -y 
+dnf install mysql -y &>>$LOG_FILE
 VALIDATE $? "Installing mysql client"
 
 
-mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql
+mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql &>>$LOG_FILE
 VALIDATE $? "Loading schema"
 
-mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql
+mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$LOG_FILE
 VALIDATE $? "Creating app user"
 
 
-mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql
+mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$LOG_FILE
 VALIDATE $? "Loading master data"
 
 

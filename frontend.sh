@@ -30,30 +30,31 @@ VALIDATE(){ # functions receive inputs through args just like shell script args
 }
 
 
-dnf module disable nginx -y
-dnf module enable nginx:1.24 -y
-dnf install nginx -y
+dnf module disable nginx -y &>>$LOG_FILE
+dnf module enable nginx:1.24 -y &>>$LOG_FILE
+dnf install nginx -y &>>$LOG_FILE
 VALIDATE $? "Installing nginx"
 
-systemctl enable nginx 
+systemctl enable nginx  &>>$LOG_FILE
 VALIDATE $? "Enable nginx"
 
-systemctl start nginx 
+systemctl start nginx  
 VALIDATE $? "Start nginx"
 
 rm -rf /usr/share/nginx/html/* 
 
-curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
+curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloading nginx"
 
 cd /usr/share/nginx/html 
 
-unzip /tmp/frontend.zip
+unzip /tmp/frontend.zip &>>$LOG_FILE
 VALIDATE $? "Unzip nginx"
 
 rm -rf /etc/nginx/nginx.conf
 
-cp frontend.service /nginx.conf /etc/nginx/nginx.conf
+cp $SCRIPT_DIR /nginx.conf /etc/nginx/nginx.conf
 VALIDATE $? "Copying nginx.conf"
 
 systemctl restart nginx 
+VALIDATE $? "Restarting Nginx"
