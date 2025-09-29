@@ -49,7 +49,7 @@ mkdir -p /app
 VALIDATE $? "Create app directory"
 
 curl -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip 
-VALIDATE $? "Downloading shiiping zip"
+VALIDATE $? "Downloading shipping zip"
 
 cd /app 
 VALIDATE $? "Change to aap directory"
@@ -64,7 +64,7 @@ VALIDATE $? "Installing package"
 mv target/shipping-1.0.jar shipping.jar 
 VALIDATE $? "Installing dependencies"
 
-cp $PWD/shipping.service /etc/systemd/system/shipping.service
+cp $SCRIPT_DIR/shipping.service /etc/systemd/system/shipping.service
 VALIDATE $? "Coping shipping service "
 
 systemctl daemon-reload
