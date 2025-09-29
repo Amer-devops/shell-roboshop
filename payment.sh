@@ -58,7 +58,7 @@ VALIDATE $? "Installing Dependencies"
 systemctl daemon-reload
 
 systemctl enable payment  &>>$LOG_FILE
-VALIDATE $? "Enabiling payment"
+VALIDATE $? "Enable payment"
 
 systemctl start payment &>>$LOG_FILE
 VALIDATE $? "Starting Payment"
