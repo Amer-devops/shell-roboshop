@@ -64,7 +64,5 @@ systemctl enable payment  &>>$LOG_FILE
 
 systemctl start payment &>>$LOG_FILE
 
-systemctl restart payment &>>$LOG_FILE
-VALIDATE $? "Restarting payment"
 
 
