@@ -53,7 +53,6 @@ mkdir -p /app
 VALIDATE $? "Creating app directory"
 
 
-
 curl -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloading cart"
 
@@ -71,7 +70,7 @@ npm install &>>$LOG_FILE
 VALIDATE $? "Installing dependencies"
 
 cp $SCRIPT_DIR/cart.service /etc/systemd/system/cart.service
-VALIDATE $? "Copy cart.services"
+VALIDATE $? "Copy cart service"
 
 systemctl daemon-reload
 
