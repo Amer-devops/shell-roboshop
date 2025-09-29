@@ -45,10 +45,10 @@ curl -L -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment-
 VALIDATE $? "Downloading PAyment zip"
 
 cd /app 
-VALIDATE $? "Changing to app diewctory"
+VALIDATE $? "Changing to app directory"
 
 unzip /tmp/payment.zip &>>$LOG_FILE
-VALIDATE $? "Unzipping payment"
+VALIDATE $? "Unzip payment"
 
 
 pip3 install -r requirements.txt
@@ -58,10 +58,8 @@ VALIDATE $? "Installing Dependencies"
 systemctl daemon-reload
 
 systemctl enable payment  &>>$LOG_FILE
-VALIDATE $? "Enable payment"
 
 systemctl start payment &>>$LOG_FILE
-VALIDATE $? "Starting Payment"
 
 systemctl restart payment &>>$LOG_FILE
 VALIDATE $? "Restarting payment"
