@@ -48,7 +48,7 @@ fi
 rm -rf /app
 VALIDATE "Removing existing directory"
 
-mkdir /app 
+mkdir -p /app 
 VALIDATE $? "Creating app directory"
 
 
