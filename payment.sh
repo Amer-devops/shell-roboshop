@@ -31,6 +31,7 @@ VALIDATE(){ # functions receive inputs through args just like shell script args
 dnf install python3 gcc python3-devel -y &>>$LOG_FILE
 VALIDATE $? "Installing python3"
 
+id roboshop &>>$LOG_FILE
 if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
     VALIDATE $? "Adding system user"
@@ -41,7 +42,7 @@ fi
 mkdir -p /app 
 VALIDATE $? "Creating app directory"
 
-curl -L -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip  &>>$LOG_FILE
+curl -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip  &>>$LOG_FILE
 VALIDATE $? "Downloading payment zip"
 
 cd /app 
@@ -53,6 +54,8 @@ VALIDATE $? "Removing existing code"
 unzip /tmp/payment.zip &>>$LOG_FILE
 VALIDATE $? "Unzip payment"
 
+cp $SCRIPT_DIR/payment.service /etc/systemd/system/payment.service
+VALIDATE $? "Coping payment.service"
 
 pip3 install -r requirements.txt
 VALIDATE $? "Installing Dependencies"
@@ -61,8 +64,11 @@ VALIDATE $? "Installing Dependencies"
 systemctl daemon-reload
 
 systemctl enable payment  &>>$LOG_FILE
+VALIDATE $? "Enable payment"
 
 systemctl start payment &>>$LOG_FILE
+VALIDATE $? "Start payment"
 
-
+systemctl restart payment
+VALIDATE $? "Restart payment"
 
