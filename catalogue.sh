@@ -9,7 +9,7 @@ N="\e[0m"
 LOGS_FOLDER="/var/log/shell-script"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log" # /var/log/shell-script/16-logs.log
-MONGODB_HOST=mongodb.daws86s.icu
+MONGO_HOST=mongodb.daws86s.icu
 SCRIPT_DIR=$PWD
 mkdir -p $LOGS_FOLDER
 echo "Script started executed at: $(date)" | tee -a $LOG_FILE
@@ -88,10 +88,10 @@ VALIDATE $? "Copy mongo repo"
 dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "Install mongodb client"
 
-INDEX=$(mongosh $MONGODB_HOST --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')")
+INDEX=$(mongosh $MONGO_HOST --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')")
 
 if [ $INDEX -le 0 ]; then
-    mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOG_FILE
+    mongosh --host $MONGO_HOST </app/db/master-data.js &>>$LOG_FILE
     VALIDATE $? "Load catalogue products"
 else
     echo -e "Catalogue products already loaded ... $Y SKIPPING $N"
