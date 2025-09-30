@@ -13,7 +13,7 @@ N="\e[0m"
 LOGS_FOLDER="/var/log/shell-roboshop"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 SCRIPT_DIR=$PWD
-MONGODB_HOST=mongodb.daws86s.fun
+MONGO_HOST=mongodb.daws86s.fun
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log" # /var/log/shell-script/16-logs.log
 
 mkdir -p $LOGS_FOLDER
@@ -54,7 +54,7 @@ dnf install mongodb-mongoshsfds -y &>>$LOG_FILE
 
 INDEX=$(mongosh mongodb.daws86s.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')")
 if [ $INDEX -le 0 ]; then
-    mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOG_FILE
+    mongosh --host $MONGO_HOST </app/db/master-data.js &>>$LOG_FILE
 else
     echo -e "Catalogue products already loaded ... $Y SKIPPING $N"
 fi
