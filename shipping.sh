@@ -61,6 +61,8 @@ rm -rf /shipping.service
 VALIDATE $? "Removing shipping.service"
 
 cp $SCRIPT_DIR/shipping.service /etc/systemd/system/shipping.service
+VALIDATE $? "coping shipping services"
+
 systemctl daemon-reload
 systemctl enable shipping  &>>$LOG_FILE
 
