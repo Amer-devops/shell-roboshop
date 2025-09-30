@@ -57,7 +57,7 @@ VALIDATE $? "unzip shipping"
 mvn clean package  &>>$LOG_FILE
 mv target/shipping-1.0.jar shipping.jar 
 
-rm -rf /shipping.service/
+rm -rf /shipping.service
 VALIDATE $? "Removing shipping.service"
 
 cp $SCRIPT_DIR/shipping.service /etc/systemd/system/shipping.service
