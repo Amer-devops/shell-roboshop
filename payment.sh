@@ -54,7 +54,7 @@ VALIDATE $? "Removing existing code"
 unzip /tmp/payment.zip &>>$LOG_FILE
 VALIDATE $? "Unzip payment"
 
-rm -rf /paymentservice
+rm -rf /payment.service
 VALIDATE $? "Removing payment.service"
 
 cp $SCRIPT_DIR/payment.service /etc/systemd/system/payment.service
